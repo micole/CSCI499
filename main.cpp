@@ -17,7 +17,7 @@ static int sheight = swidth;
 static int width, height;
 static int depth = 0;  // keep track of recursion depth (not currently using)
 
-static int debug = 1;  // i.e. no debugging
+static int debug = 0;  // i.e. no debugging
 
 static long gen = 0;   // generation number
 
@@ -463,7 +463,7 @@ int main(int argc, char** argv)
     return 2;
   }
 
-  width = mypow2(k) + 1;
+  width = mypow2(k * 4) + 1; //4 for mod4
   height = width;
 
   if (argc == 3) {
