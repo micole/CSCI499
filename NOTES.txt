@@ -1,0 +1,6 @@
+./main 3    <-- will generate output to stdout of DOT file
+# copy this output to a file pig.dot (or use redirect on above command
+#dot -T svg pig.dot >pig.svg 
+neato -T svg pig.dot >pig.svg 
+rsvg-convert -f png -o pig.png pig.svg
+#rsvg-convert -f pdf -o pig.pdf pig.svg
