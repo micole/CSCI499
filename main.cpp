@@ -17,7 +17,7 @@ static int sheight = swidth;
 static int width, height;
 static int depth = 0;  // keep track of recursion depth (not currently using)
 
-static int debug = 0;  // i.e. no debugging
+static int debug = 1;  // i.e. no debugging
 
 static long gen = 0;   // generation number
 
@@ -175,7 +175,8 @@ inline void tri_connect(int a, int b, int c)
   g->addEdge(b, c, depth);
   g->addEdge(c, a, depth);
 }
-
+//Modifications to be made:
+//Mod4
 void build_sierpinski_graph(int a, int b, int c)
 {
   depth++;
@@ -186,6 +187,19 @@ void build_sierpinski_graph(int a, int b, int c)
   int ab = midpoint(a, b);
   int bc = midpoint(b, c);
   int ac = midpoint(a, c);
+
+  //new ints for the other midpoints on the outer edge
+  int ab1 = midpoint(a, ab);
+  int ab2 = midpoint(b, ab);
+  int bc1 = midpoint(b, bc);
+  int bc2 = midpoint(c, bc);
+  int ac1 = midpoint(a, ac);
+  int ac2 = midpoint(c, ac);
+
+  //new ints for the midpoints inside the triangle 
+  int top = midpoint(ab, ac);
+  int left = midpoint(ab, bc);
+  int right = midpoint(ab, ac);
 
   if (ab > a && ac > ab) {
     if (debug)
@@ -213,6 +227,15 @@ void build_sierpinski_graph(int a, int b, int c)
   }
   else
     tri_connect(a, b, c);
+
+  //new triangles (mod4)
+  build_sierpinski_graph(ab1, ab, top);
+  build_sierpinski_graph(ac1, ac, top);
+  build_sierpinski_graph(top, left, right);
+  build_sierpinski_graph(ab2, ab, left);
+  build_sierpinski_graph(ac, ac2, right);
+  build_sierpinski_graph(bc1, bc, left);
+  build_sierpinski_graph(bc2, bc, right);
 
   depth--;
 }
